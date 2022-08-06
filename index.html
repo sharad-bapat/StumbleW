@@ -8,37 +8,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bs.css" />
     <link rel="stylesheet" href="css/sw.css" />
-    <title>StumbleW</title>
+    <title>StumbleW - Stumble Upon interesting content</title>
+    <meta name="title" content="StumbleW - Stumble Upon interesting content">
+    <meta name="description" content="StumbleW simplifies the process of discovering new content on the web." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stumble-w.web.app/">
+    <meta property="og:title" content="StumbleW - Stumble Upon interesting content">
+    <meta property="og:description" content="StumbleW simplifies the process of discovering new content on the web.">
+    <meta property="og:image" content="favicon.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://stumble-w.web.app/">
+    <meta property="twitter:title" content="StumbleW - Stumble Upon interesting content">
+    <meta property="twitter:description"
+        content="StumbleW simplifies the process of discovering new content on the web.">
+    <meta property="twitter:image" content="favicon.png">
 </head>
 
 <body>
-    <div class="container-fluid py-2 my-2">
-        <div class="row justify-content-center">           
+    <div class="container-fluid py-2 mt-2">
+        <div class="row justify-content-center">
             <div class="col-auto">
                 <button type="button" class="btn btn-primary btn-sm mybutton">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" fill="currentColor" class="bi bi-shuffle"
-                        viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" fill="currentColor"
+                        class="bi bi-shuffle" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.624 9.624 0 0 0 7.556 8a9.624 9.624 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.595 10.595 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.624 9.624 0 0 0 6.444 8a9.624 9.624 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5z" />
                         <path
                             d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192zm0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z" />
-                    </svg>                   
+                    </svg>
                 </button>
+
             </div>
-        </div> 
+        </div>
+    </div>
+    <div class="container-fluid py-2 mt-0 mb-2">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <span class="small">Discover interesting content on the web</span>
+            </div>
+        </div>
     </div>
     <div class="container-fluid">
-        <div class="row justify-content-center">           
+        <div class="row justify-content-center">
             <div class="col-md-10 col-lg-10 col-sm-12 border-1">
-                <div id="content" class="content shadow-lg p-4 mb-4 bg-body rounded"></div>  
+                <div id="content" class="content shadow-lg p-4 mb-4 bg-body rounded"></div>
             </div>
-        </div> 
+        </div>
     </div>
 </body>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/async.js"></script>
-<script src="js/ls.js"></script>
 <script src="js/main.js"></script>
 
 </html>
