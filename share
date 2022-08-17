@@ -1,0 +1,92 @@
+//Reddit
+function normalizeRedditData(results){
+    arr = []
+    for (index in results) {
+        results[index].data.children.forEach(item => {
+            var item_index = arr.findIndex(x => x.link == item.data.url);
+            if (item.data.url.includes("youtube") || item.data.url.includes("youtu.be") || item.data.url.includes("twitter.com") || item.data.url.includes("redd.it") || item.data.url.includes("reddit.com") || item.data.url.includes("imgur.com") || item.data.url.includes("gfycat.com")) {
+                //do nothing
+            } else {
+                if (item_index === -1) {
+                    var {hostname} = new URL(item.data.url);               
+                    let media = item.data.thumbnail ?  item.data.thumbnail : ``;
+                    let iDate = item.data.created ? `${hostname} | ${timeSince(new Date(item.data.created*1000))}` : ``
+                    let published =  item.data.created*1000;
+                    let title =  item.data.title ? item.data.title : ``
+                    let content =  item.data.content ? item.data.content : ``
+                    arr.push({
+                        "title": title,
+                        "link": item.data.url,
+                        "content": content,
+                        "iDate": iDate,
+                        "media": media,
+                        "published":published,
+                    })
+                    // arr.push({
+                    //     "title": item.data.title,
+                    //     "created": item.data.created,
+                    //     "link": item.data.url,
+                    //     "source": item.data.domain,
+                    //     "thumbnail": item.data.thumbnail,
+                    // })
+                }
+            }
+        });
+    }
+    arrr = arr.sort(function (a, b) {
+        return b.published - a.published;
+    });    
+    return arrr;
+}
+function getReddit(subreddits) {
+    return new Promise((resolve, reject) => {
+        try {
+            urls = [
+                `https://www.reddit.com/r/${subreddits}/top/.json?t=week&limit=50`,
+                `https://www.reddit.com/r/${subreddits}/top/.json?t=day&limit=50`,
+                `https://www.reddit.com/r/${subreddits}/top/.json?t=hour&limit=50`,
+                `https://www.reddit.com/r/${subreddits}/hot/.json?&t=week&limit=50`,
+                `https://www.reddit.com/r/${subreddits}/hot/.json?&t=day&limit=50`,
+                `https://www.reddit.com/r/${subreddits}/hot/.json?&t=hour&limit=50`,
+            ]
+            async.mapLimit(urls, 6, async function (url) { 
+                try { 
+                    const response = await fetch(url); 
+                    return response.json() 
+                } catch (err) { 
+                    return {} 
+                } 
+            }, (err, results) => { 
+                response = normalizeRedditData(results);                     
+                resolve(response) 
+            })
+        } catch (err) { reject(err) }
+    })
+}
+function populate(data, showContent){
+    $("#readit").html(``);
+    console.log(data);
+    $.each(data, function(k,v){
+        let content = showContent ? `<p class="mt-2 small" style="white-space: pre-line">${v.content}</p>` : ``
+        var {hostname} = new URL(v.link);
+        let media = v.media ? `<img class="rounded" src="${v.media}" alt="" height="56" width="56" style="object-fit:cover">` : `<img src="https://icon.horse/icon/${hostname.replace("www.", "")}" alt="" height="56" width="56" style="object-fit:cover">`;       
+        var $listItem = $(`
+        <li class="py-4 list-group-item border-0 newslink" style="cursor:pointer">
+                <p class="mb-1 smaller">${v.iDate}</p>
+                <div class="d-flex justify-content-start">  
+                 ${media}                  
+                    <div class="ms-2">                        
+                        <h6 class="fw-bold mb-0 mt-0">${v.title}</h6>                        
+                    </div>
+                </div>
+                 ${content}
+            </li>     
+        `);
+        $("#readit").append($listItem);
+        $listItem.on("click", function (e) {
+            document.getElementById("overlay1").style.display = "block";
+            console.log(v.link);
+            getArticleExtract(v.link);
+        });
+    })
+}
